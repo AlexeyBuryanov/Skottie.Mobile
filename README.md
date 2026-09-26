@@ -1,5 +1,9 @@
 # Skottie.Mobile
 
+[![NuGet — Android](https://img.shields.io/nuget/v/Skottie.Mobile.Android.svg?label=Android)](https://www.nuget.org/packages/Skottie.Mobile.Android/)
+[![NuGet — iOS](https://img.shields.io/nuget/v/Skottie.Mobile.iOS.svg?label=iOS)](https://www.nuget.org/packages/Skottie.Mobile.iOS/)
+[![NuGet — MAUI](https://img.shields.io/nuget/v/Skottie.Mobile.Maui.svg?label=MAUI)](https://www.nuget.org/packages/Skottie.Mobile.Maui/)
+
 Lottie JSON animation controls for **.NET 10 Android, .NET 10 iOS, and .NET MAUI 10**,
 rendered with [SkiaSharp Skottie](https://github.com/mono/SkiaSharp).
 
