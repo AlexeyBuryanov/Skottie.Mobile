@@ -301,44 +301,6 @@ expose repeat counts, speed, seeking, completion callbacks, `.lottie` archives,
 or external image/font resource providers. Prefer self-contained vector animations;
 animations requiring external assets need additional resource-provider integration.
 
-## Publishing to NuGet
-
-[`.github/workflows/publish.yml`](.github/workflows/publish.yml) follows the same
-release-triggered Trusted Publishing flow as FFImageLoading.Cross. Publishing a
-GitHub release builds and packs these libraries in Release configuration:
-
-- `Skottie.Mobile.Android`
-- `Skottie.Mobile.iOS`
-- `Skottie.Mobile.Maui`
-
-Use a release tag such as `v1.0.0` or `v1.1.0-preview.1` (the `v` is optional).
-The tag supplies the version for all three packages and their project dependencies.
-Local packs default to `1.0.0`; override with `dotnet pack -p:Version=1.2.3`.
-Package metadata lives in `src/Directory.Build.props`. Playground apps are not packable.
-Each package includes the README and MIT license, and has a companion `.snupkg`.
-
-The workflow uses macOS 26, .NET SDK 10.0.401, workload set 10.0.400.1, and Xcode 26.6.
-Update these together when upgrading the mobile toolchain. Packages are retained
-as a GitHub Actions artifact before `NuGet/login@v1` obtains a temporary publishing
-key for `Oleksii_Burianov`; no long-lived NuGet API key secret is needed.
-
-The matching [NuGet Trusted Publishing policy](https://www.nuget.org/account/TrustedPublishing)
-must be configured separately on NuGet.org:
-
-| Setting | Value |
-| --- | --- |
-| NuGet account | `Oleksii_Burianov` |
-| Repository owner | `AlexeyBuryanov` |
-| Repository | `Skottie.Mobile` |
-| Workflow file | `publish.yml` (file name only) |
-| Environment | Leave empty |
-| Package scope | `Skottie.Mobile.*`, allowing new packages and new versions |
-
-See [NuGet's Trusted Publishing documentation](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing)
-for policy setup. The repository workflow does not create the NuGet account policy.
-Publishing a release is the publish trigger; normal pushes and pull requests do not
-publish packages. Existing package versions are skipped on a rerun.
-
 ## License
 
 [MIT](LICENSE).
