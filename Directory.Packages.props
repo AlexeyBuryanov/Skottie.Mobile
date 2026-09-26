@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.110" />
+    <PackageVersion Include="SkiaSharp.Skottie" Version="4.152.1" />
+    <PackageVersion Include="SkiaSharp.Views" Version="4.152.1" />
+  </ItemGroup>
+</Project>

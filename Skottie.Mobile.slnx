@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/!Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Skottie.Mobile.Android/Skottie.Mobile.Android.csproj" />
+    <Project Path="src/Skottie.Mobile.iOS/Skottie.Mobile.iOS.csproj" />
+    <Project Path="src/Skottie.Mobile.Maui/Skottie.Mobile.Maui.csproj" />
+  </Folder>
+</Solution>
