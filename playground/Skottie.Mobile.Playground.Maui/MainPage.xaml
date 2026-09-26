@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Skottie.Mobile.Playground.Maui"
+             xmlns:skottie="clr-namespace:Skottie.Mobile.Maui;assembly=Skottie.Mobile.Maui"
+             x:Class="Skottie.Mobile.Playground.Maui.MainPage"
+             x:DataType="local:MainPage"
+             Title="Skottie MAUI"
+             BackgroundColor="#F2F6FA">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#183047" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#183047" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="MinimumHeightRequest" Value="48" />
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16" MaximumWidthRequest="600" HorizontalOptions="Fill">
+            <Label Text="Skottie / MAUI" FontSize="28" FontAttributes="Bold" />
+            <Label Text=".NET 10 · native controls through a MAUI handler" FontSize="16" />
+            <Border BackgroundColor="White" Stroke="#DAE4ED" StrokeShape="RoundRectangle 20">
+                <skottie:SkottieAnimationView x:Name="Animation"
+                                             Source="{Binding AnimationSource}"
+                                             IsPlaying="{Binding PlaybackRequested}"
+                                             LoadFailed="OnLoadFailed"
+                                             HeightRequest="240"
+                                             HorizontalOptions="Fill" />
+            </Border>
+            <Label Text="{Binding Status}" FontSize="16" MinimumHeightRequest="48" />
+            <Grid x:Name="ActionButtons" ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                <Button Text="Play" Clicked="OnPlay" />
+                <Button Grid.Column="1" Text="Pause" Clicked="OnPause" />
+                <Button Grid.Row="1" Text="Reload asset" Clicked="OnReloadAsset" />
+                <Button Grid.Row="1" Grid.Column="1" Text="Load file" Clicked="OnLoadFile" />
+                <Button Grid.Row="2" Text="Missing asset" Clicked="OnMissingAsset" />
+                <Button Grid.Row="2" Grid.Column="1" Text="Clear" Clicked="OnClear" />
+            </Grid>
+            <Label Text="Source and IsPlaying use compiled XAML bindings. Try error recovery, then background and reopen the app to test playback lifecycle handling."
+                   FontSize="14" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

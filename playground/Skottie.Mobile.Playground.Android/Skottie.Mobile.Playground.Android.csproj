@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
+    <ApplicationId>com.skottie.playground.android</ApplicationId>
+    <ApplicationTitle>Skottie Android</ApplicationTitle>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Skottie.Mobile.Android/Skottie.Mobile.Android.csproj" />
+    <AndroidAsset Include="../Shared/orbit.json" Link="Assets/animations/orbit.json" LogicalName="animations/orbit.json" />
+  </ItemGroup>
+</Project>

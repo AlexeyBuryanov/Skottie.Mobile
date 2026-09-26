@@ -7,8 +7,21 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/src/">
+    <File Path="src/Directory.Build.props" />
     <Project Path="src/Skottie.Mobile.Android/Skottie.Mobile.Android.csproj" />
     <Project Path="src/Skottie.Mobile.iOS/Skottie.Mobile.iOS.csproj" />
     <Project Path="src/Skottie.Mobile.Maui/Skottie.Mobile.Maui.csproj" />
+  </Folder>
+  <Folder Name="/!Solution Items/.github/" />
+  <Folder Name="/!Solution Items/.github/workflows/">
+    <File Path=".github/workflows/publish.yml" />
+  </Folder>
+  <Folder Name="/playground/">
+    <Project Path="playground/Skottie.Mobile.Playground.Android/Skottie.Mobile.Playground.Android.csproj" />
+    <Project Path="playground/Skottie.Mobile.Playground.iOS/Skottie.Mobile.Playground.iOS.csproj" />
+    <Project Path="playground/Skottie.Mobile.Playground.Maui/Skottie.Mobile.Playground.Maui.csproj" />
+  </Folder>
+  <Folder Name="/playground/Shared/">
+    <File Path="playground/Shared/orbit.json" />
   </Folder>
 </Solution>

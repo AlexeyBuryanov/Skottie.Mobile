@@ -33,7 +33,8 @@ Windows and Mac Catalyst are not currently targeted.
 Dependencies are centrally managed in `Directory.Packages.props`: SkiaSharp 4.152.1 and
 Microsoft.Maui.Controls 10.0.110.
 
-From the repository root, with the corresponding workloads installed:
+From the repository root, with the corresponding workloads installed (building
+iOS app bundles requires a Mac or a paired Mac):
 
 ```sh
 dotnet restore Skottie.Mobile.slnx
@@ -51,6 +52,66 @@ To build only the Android target of the MAUI library on a machine without the iO
 ```sh
 dotnet build src/Skottie.Mobile.Maui/Skottie.Mobile.Maui.csproj -p:TargetFrameworks=net10.0-android
 ```
+
+## Playground apps
+
+The solution includes three runnable .NET 10 playgrounds. Each references its
+corresponding library project directly, so library edits are picked up when you rebuild.
+
+| Project | Runs on | What it exercises |
+| --- | --- | --- |
+| `playground/Skottie.Mobile.Playground.Android` | Android | Native `SkottieAnimationView`, Android assets, and activity lifecycle |
+| `playground/Skottie.Mobile.Playground.iOS` | iOS | Native `SkottieAnimationView`, bundle resources, and scene lifecycle |
+| `playground/Skottie.Mobile.Playground.Maui` | Android and iOS | `UseSkottie()`, the native handler, compiled XAML bindings, and MAUI window lifecycle |
+
+All three package the same original, self-contained animation from
+[`playground/Shared/orbit.json`](playground/Shared/orbit.json) as
+`animations/orbit.json`. It shows a teal dot orbiting a dark center every two
+seconds and needs no network connection or external images. Replace that file
+with your own Lottie JSON and rebuild to test another animation.
+
+In Visual Studio or Rider, select a playground as the startup project, choose its
+target platform and a device/emulator/simulator, then run. On Windows, iOS app
+deployment requires a paired Mac. The native iOS app uses a scene delegate and
+does not require a storyboard.
+
+### Run from the command line
+
+Start an Android emulator or connect a device with USB debugging enabled, then
+run one of these commands from the repository root:
+
+```sh
+dotnet build playground/Skottie.Mobile.Playground.Android/Skottie.Mobile.Playground.Android.csproj -t:Run
+dotnet build playground/Skottie.Mobile.Playground.Maui/Skottie.Mobile.Playground.Maui.csproj -t:Run -f net10.0-android -p:TargetFrameworks=net10.0-android
+```
+
+For iOS, run on a Mac with the .NET 10 iOS/MAUI workloads and compatible Xcode.
+Find a simulator UDID with `xcrun simctl list devices available`, then replace
+`SIMULATOR_UDID` below with that value:
+
+```sh
+dotnet build playground/Skottie.Mobile.Playground.iOS/Skottie.Mobile.Playground.iOS.csproj -t:Run -p:RuntimeIdentifier=iossimulator-arm64 -p:_DeviceName=:v2:udid=SIMULATOR_UDID
+dotnet build playground/Skottie.Mobile.Playground.Maui/Skottie.Mobile.Playground.Maui.csproj -t:Run -f net10.0-ios -p:TargetFrameworks=net10.0-ios -p:RuntimeIdentifier=iossimulator-arm64 -p:_DeviceName=:v2:udid=SIMULATOR_UDID
+```
+
+Use `iossimulator-x64` on an Intel Mac. Running on a physical iPhone requires your
+Apple signing identity and provisioning profile; configure those in your IDE.
+Windows builds can check the iOS C# code but do not validate an iOS app bundle or
+device rendering without a Mac.
+
+### Manual checks
+
+1. Launch each app: the teal dot should orbit continuously on a transparent canvas.
+2. **Pause**, then **Play**: the dot should resume from its paused position.
+3. **Reload asset** (or **Reload bundle** on iOS): playback should restart.
+4. **Load file**: the app copies the bundled JSON to its cache and plays it through
+   the absolute-file-path API.
+5. **Missing asset**: a visible `Load failed` message should appear without a crash.
+   Reload the bundled animation to check recovery.
+6. **Clear**: the animation should disappear. Reload to play again.
+7. Background and reopen the app, both while playing and while paused. Playing
+   animations should resume; paused animations should stay paused. Rotate the
+   device to check layout (the native Android activity reloads on recreation).
 
 ## .NET MAUI
 
@@ -239,6 +300,44 @@ The current API supports looping JSON animations and pause/resume. It does not
 expose repeat counts, speed, seeking, completion callbacks, `.lottie` archives,
 or external image/font resource providers. Prefer self-contained vector animations;
 animations requiring external assets need additional resource-provider integration.
+
+## Publishing to NuGet
+
+[`.github/workflows/publish.yml`](.github/workflows/publish.yml) follows the same
+release-triggered Trusted Publishing flow as FFImageLoading.Cross. Publishing a
+GitHub release builds and packs these libraries in Release configuration:
+
+- `Skottie.Mobile.Android`
+- `Skottie.Mobile.iOS`
+- `Skottie.Mobile.Maui`
+
+Use a release tag such as `v1.0.0` or `v1.1.0-preview.1` (the `v` is optional).
+The tag supplies the version for all three packages and their project dependencies.
+Local packs default to `1.0.0`; override with `dotnet pack -p:Version=1.2.3`.
+Package metadata lives in `src/Directory.Build.props`. Playground apps are not packable.
+Each package includes the README and MIT license, and has a companion `.snupkg`.
+
+The workflow uses macOS 26, .NET SDK 10.0.401, workload set 10.0.400.1, and Xcode 26.6.
+Update these together when upgrading the mobile toolchain. Packages are retained
+as a GitHub Actions artifact before `NuGet/login@v1` obtains a temporary publishing
+key for `Oleksii_Burianov`; no long-lived NuGet API key secret is needed.
+
+The matching [NuGet Trusted Publishing policy](https://www.nuget.org/account/TrustedPublishing)
+must be configured separately on NuGet.org:
+
+| Setting | Value |
+| --- | --- |
+| NuGet account | `Oleksii_Burianov` |
+| Repository owner | `AlexeyBuryanov` |
+| Repository | `Skottie.Mobile` |
+| Workflow file | `publish.yml` (file name only) |
+| Environment | Leave empty |
+| Package scope | `Skottie.Mobile.*`, allowing new packages and new versions |
+
+See [NuGet's Trusted Publishing documentation](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing)
+for policy setup. The repository workflow does not create the NuGet account policy.
+Publishing a release is the publish trigger; normal pushes and pull requests do not
+publish packages. Existing package versions are skipped on a rerun.
 
 ## License
 

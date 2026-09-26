@@ -1,0 +1,22 @@
+<Project>
+  <Import Project="../Directory.Build.props" />
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <Version>1.0.0</Version>
+    <Authors>Oleksii Burianov</Authors>
+    <Copyright>Copyright (c) 2026 Oleksii Burianov</Copyright>
+    <Description>Lottie JSON animation controls for .NET 10 Android, iOS, and MAUI, powered by SkiaSharp Skottie.</Description>
+    <PackageProjectUrl>https://github.com/AlexeyBuryanov/Skottie.Mobile</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AlexeyBuryanov/Skottie.Mobile</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>lottie;skottie;skiasharp;animation;android;ios;maui;net10</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)../LICENSE" Pack="true" PackagePath="/" />
+    <None Include="$(MSBuildThisFileDirectory)../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+</Project>
