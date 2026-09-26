@@ -9,6 +9,39 @@ and [Lottie.DotNet8.Ios](https://github.com/AlexeyBuryanov/Lottie.DotNet8.Ios),
 which are no longer supported.** This is a replacement control with its own API,
 not a binary-compatible update to those bindings. See the migration notes below.
 
+## Why choose Skottie.Mobile over platform-specific Lottie bindings?
+
+**If your app just needs to display a Lottie animation, Skottie.Mobile is a much
+better fit: simpler to use and simpler to maintain.** Add the control, load your
+animation, and play it. You get a small API for Android, iOS, and MAUI without
+having to integrate the broader APIs of separate platform Lottie bindings.
+
+For common loading indicators, status animations, and decorative motion, this
+keeps both application code and ongoing support straightforward. The native
+controls and MAUI handler share the same Skottie rendering engine, and dependency
+updates are managed through SkiaSharp NuGet packages.
+
+| Advantage | What it means for your application |
+| --- | --- |
+| Built for .NET 10 | Dedicated Android, iOS, and MAUI projects provide a migration path from the unsupported .NET 8 bindings linked above. |
+| One rendering engine | Both platforms use [Skia's Skottie renderer](https://skia.org/docs/user/modules/skottie/) through SkiaSharp, reducing the number of renderer implementations you need to account for when testing animations. |
+| MAUI integration included | `UseSkottie()`, bindable `Source` and `IsPlaying` properties, and a handler that reuses the native controls let you integrate animations without writing your own platform handlers. |
+| No separate Lottie binding projects to maintain | This repository consumes SkiaSharp NuGet packages instead of maintaining bindings for separate Android and iOS Lottie libraries. SkiaSharp still supplies native binaries, so platform and dependency compatibility remain relevant. |
+| Small playback API | `Start()`, `Stop()`, and `LoadFailed` cover common playback and error-handling needs. MAUI provides one source property for packaged resources and local files. |
+| Lifecycle handling included | Native views suspend frame callbacks while detached and release animation resources when cleared or disposed. The MAUI handler clears its native control on disconnect. |
+| Ready-to-run playgrounds | Native Android, native iOS, and MAUI sample apps make it easy to check the same animation, loading paths, and playback behavior across platforms. |
+
+Need more functionality? **Pull requests are welcome**, including additions such
+as seeking, speed control, repeat counts, or completion callbacks. See
+[CONTRIBUTING.md](https://github.com/AlexeyBuryanov/Skottie.Mobile/blob/main/CONTRIBUTING.md)
+for how to propose a change, develop it, and test it across the supported platforms.
+If you need those features today, check the available APIs before migrating.
+
+Skottie and the platform Lottie renderers can differ in
+feature support and output, so test your own animation files. Performance, memory
+use, and application size have not been benchmarked against the bindings; this
+project does not claim an advantage in those areas.
+
 ## Projects
 
 | Project | Target frameworks | Control |
@@ -300,6 +333,13 @@ The current API supports looping JSON animations and pause/resume. It does not
 expose repeat counts, speed, seeking, completion callbacks, `.lottie` archives,
 or external image/font resource providers. Prefer self-contained vector animations;
 animations requiring external assets need additional resource-provider integration.
+
+## Contributing
+
+See [CONTRIBUTING.md](https://github.com/AlexeyBuryanov/Skottie.Mobile/blob/main/CONTRIBUTING.md)
+for development setup, testing, and pull-request guidelines. Please follow the
+[Code of Conduct](https://github.com/AlexeyBuryanov/Skottie.Mobile/blob/main/CODE_OF_CONDUCT.md)
+when participating.
 
 ## License
 
