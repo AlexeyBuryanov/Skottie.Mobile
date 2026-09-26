@@ -153,20 +153,18 @@ device rendering without a Mac.
 
 ## .NET MAUI
 
-### 1. Reference the library
+### 1. Install the NuGet package
 
-Add a project reference to `src/Skottie.Mobile.Maui/Skottie.Mobile.Maui.csproj` from
-your .NET 10 MAUI app. Adjust the relative path to your checkout:
+Install [Skottie.Mobile.Maui](https://www.nuget.org/packages/Skottie.Mobile.Maui/)
+from your .NET 10 MAUI app's project directory:
 
-```xml
-<ItemGroup>
-  <ProjectReference Include="../Skottie.Mobile/src/Skottie.Mobile.Maui/Skottie.Mobile.Maui.csproj" />
-</ItemGroup>
+```sh
+dotnet add package Skottie.Mobile.Maui
 ```
 
-The native project reference is selected automatically for the app's target platform.
+The appropriate native package is included automatically for the app's target platform.
 Your app should target `net10.0-android` and/or `net10.0-ios`. If your app also targets
-other platforms, condition this reference and the control's usage to Android/iOS.
+other platforms, condition the package reference and the control's usage to Android/iOS.
 
 ### 2. Register the handler
 
@@ -260,8 +258,14 @@ pause in `OnDisappearing` and resume in `OnAppearing` as appropriate for your ap
 
 ## Native .NET Android
 
-Reference `src/Skottie.Mobile.Android/Skottie.Mobile.Android.csproj` from a
-`net10.0-android` app. Put `loading.json` in `Assets` with build action **AndroidAsset**.
+Install [Skottie.Mobile.Android](https://www.nuget.org/packages/Skottie.Mobile.Android/)
+from your `net10.0-android` app's project directory:
+
+```sh
+dotnet add package Skottie.Mobile.Android
+```
+
+Put `loading.json` in `Assets` with build action **AndroidAsset**.
 
 ```csharp
 using Skottie.Mobile.Android;
@@ -294,7 +298,13 @@ Dispose the view when its owner is permanently destroyed.
 
 ## Native .NET iOS
 
-Reference `src/Skottie.Mobile.iOS/Skottie.Mobile.iOS.csproj` from a `net10.0-ios` app.
+Install [Skottie.Mobile.iOS](https://www.nuget.org/packages/Skottie.Mobile.iOS/)
+from your `net10.0-ios` app's project directory:
+
+```sh
+dotnet add package Skottie.Mobile.iOS
+```
+
 Add `loading.json` to the application bundle with build action **BundleResource**.
 
 ```csharp
@@ -326,7 +336,7 @@ Use the loading methods instead. Call all native APIs on the UI thread.
 ## Migrating from the older Lottie bindings
 
 1. Remove the `Lottie.DotNet8.Android` or `Lottie.DotNet8.Ios` reference and add the
-   appropriate Skottie.Mobile project reference.
+   appropriate Skottie.Mobile NuGet package.
 2. Replace the old native view and namespace with `SkottieAnimationView` (including
    the registered class name in Android XML or iOS storyboard integrations).
 3. Load your JSON using the native methods above, or `Source` in MAUI, and replace
