@@ -8,7 +8,8 @@ Lottie JSON animation controls for **.NET 10 Android, .NET 10 iOS, and .NET MAUI
 rendered with [SkiaSharp Skottie](https://github.com/mono/SkiaSharp).
 
 **Skottie.Mobile replaces
-[Lottie.DotNet8.Android](https://github.com/AlexeyBuryanov/Lottie.DotNet8.Android)
+[LottieXamarin](https://github.com/Baseflow/LottieXamarin),
+[Lottie.DotNet8.Android](https://github.com/AlexeyBuryanov/Lottie.DotNet8.Android),
 and [Lottie.DotNet8.Ios](https://github.com/AlexeyBuryanov/Lottie.DotNet8.Ios),
 which are no longer supported.** This is a replacement control with its own API,
 not a binary-compatible update to those bindings. See the migration notes below.
@@ -27,7 +28,7 @@ updates are managed through SkiaSharp NuGet packages.
 
 | Advantage | What it means for your application |
 | --- | --- |
-| Built for .NET 10 | Dedicated Android, iOS, and MAUI projects provide a migration path from the unsupported .NET 8 bindings linked above. |
+| Built for .NET 10 | Dedicated Android, iOS, and MAUI projects provide a migration path from the unsupported Xamarin and .NET 8 bindings linked above. |
 | One rendering engine | Both platforms use [Skia's Skottie renderer](https://skia.org/docs/user/modules/skottie/) through SkiaSharp, reducing the number of renderer implementations you need to account for when testing animations. |
 | MAUI integration included | `UseSkottie()`, bindable `Source` and `IsPlaying` properties, and a handler that reuses the native controls let you integrate animations without writing your own platform handlers. |
 | No separate Lottie binding projects to maintain | This repository consumes SkiaSharp NuGet packages instead of maintaining bindings for separate Android and iOS Lottie libraries. SkiaSharp still supplies native binaries, so platform and dependency compatibility remain relevant. |
